@@ -1,0 +1,35 @@
+{% extends "assessments/base.html" %}
+{% block title %}Assessments | Trustworthy AI Workbench{% endblock %}
+{% block content %}
+<section class="hero">
+  <p class="eyebrow">Evidence-based self-assessment</p>
+  <h1>Turn Trustworthy AI questions into owned actions.</h1>
+  <p>Capture rationale and evidence, review coverage across seven dimensions, and export a traceable report.</p>
+</section>
+
+<section class="section-heading">
+  <div>
+    <h2>Assessments</h2>
+    <p class="muted">Most recently updated first</p>
+  </div>
+  <a class="button" href="{% url 'assessment-create' %}">Create assessment</a>
+</section>
+
+{% if assessments %}
+  <div class="card-grid">
+    {% for assessment in assessments %}
+      <a class="card assessment-card" href="{% url 'assessment-detail' assessment.pk %}">
+        <span class="status {{ assessment.status }}">{{ assessment.get_status_display }}</span>
+        <h3>{{ assessment.system_name }}</h3>
+        <p>{{ assessment.organisation_name }}</p>
+        <span class="muted">Updated {{ assessment.updated_at|date:"j M Y, H:i" }}</span>
+      </a>
+    {% endfor %}
+  </div>
+{% else %}
+  <div class="empty card">
+    <h3>No assessments yet</h3>
+    <p>Start with the system's intended purpose and organisational role.</p>
+  </div>
+{% endif %}
+{% endblock %}

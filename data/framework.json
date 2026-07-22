@@ -1,0 +1,85 @@
+{
+  "framework": {
+    "code": "TAI-STARTER-2026",
+    "name": "Trustworthy AI Readiness Starter",
+    "version": "2026.1",
+    "source_url": "https://digital-strategy.ec.europa.eu/en/library/assessment-list-trustworthy-artificial-intelligence-altai-self-assessment",
+    "notes": "Original starter questions organised around the seven ALTAI requirements and cross-referenced to selected EU AI Act provisions. This is not an official ALTAI implementation or a legal compliance checklist."
+  },
+  "regulatory_references": [
+    {"code": "EU-AIA-ART-9", "title": "EU AI Act Article 9 - Risk management system", "url": "https://eur-lex.europa.eu/eli/reg/2024/1689/oj#art_9"},
+    {"code": "EU-AIA-ART-10", "title": "EU AI Act Article 10 - Data and data governance", "url": "https://eur-lex.europa.eu/eli/reg/2024/1689/oj#art_10"},
+    {"code": "EU-AIA-ART-11", "title": "EU AI Act Article 11 - Technical documentation", "url": "https://eur-lex.europa.eu/eli/reg/2024/1689/oj#art_11"},
+    {"code": "EU-AIA-ART-12", "title": "EU AI Act Article 12 - Record-keeping", "url": "https://eur-lex.europa.eu/eli/reg/2024/1689/oj#art_12"},
+    {"code": "EU-AIA-ART-13", "title": "EU AI Act Article 13 - Transparency and information to deployers", "url": "https://eur-lex.europa.eu/eli/reg/2024/1689/oj#art_13"},
+    {"code": "EU-AIA-ART-14", "title": "EU AI Act Article 14 - Human oversight", "url": "https://eur-lex.europa.eu/eli/reg/2024/1689/oj#art_14"},
+    {"code": "EU-AIA-ART-15", "title": "EU AI Act Article 15 - Accuracy, robustness and cybersecurity", "url": "https://eur-lex.europa.eu/eli/reg/2024/1689/oj#art_15"},
+    {"code": "EU-AIA-ART-17", "title": "EU AI Act Article 17 - Quality management system", "url": "https://eur-lex.europa.eu/eli/reg/2024/1689/oj#art_17"},
+    {"code": "EU-AIA-ART-72", "title": "EU AI Act Article 72 - Post-market monitoring", "url": "https://eur-lex.europa.eu/eli/reg/2024/1689/oj#art_72"}
+  ],
+  "requirements": [
+    {
+      "code": "HUM", "title": "Human agency and oversight", "sort_order": 1,
+      "description": "Define meaningful human authority, competence and intervention points.",
+      "questions": [
+        {"code": "HUM-01", "text": "Are the decisions supported or made by the AI system assigned to people with clear authority and accountability?", "guidance": "Name the responsible role, decision boundary and escalation path.", "weight": 3, "references": ["EU-AIA-ART-14"]},
+        {"code": "HUM-02", "text": "Can authorised people understand, challenge, override or stop the system when its use creates unacceptable risk?", "guidance": "Define intervention controls and test them in realistic scenarios.", "weight": 3, "references": ["EU-AIA-ART-9", "EU-AIA-ART-14"]},
+        {"code": "HUM-03", "text": "Do operators receive role-specific instructions and training on capabilities, limitations and foreseeable misuse?", "guidance": "Maintain training material, completion records and refresher triggers.", "weight": 2, "references": ["EU-AIA-ART-13", "EU-AIA-ART-14"]}
+      ]
+    },
+    {
+      "code": "ROB", "title": "Technical robustness and safety", "sort_order": 2,
+      "description": "Test performance, failure handling and security throughout the lifecycle.",
+      "questions": [
+        {"code": "ROB-01", "text": "Are performance thresholds, failure modes and acceptable residual risks documented for the intended context?", "guidance": "Record measurable thresholds, assumptions and owners for residual-risk acceptance.", "weight": 3, "references": ["EU-AIA-ART-9", "EU-AIA-ART-15"]},
+        {"code": "ROB-02", "text": "Is the system tested before release and after material changes using representative normal, edge and failure scenarios?", "guidance": "Link test cases and results to requirements and release decisions.", "weight": 3, "references": ["EU-AIA-ART-9", "EU-AIA-ART-15"]},
+        {"code": "ROB-03", "text": "Are AI-specific and conventional cybersecurity threats assessed, monitored and handled?", "guidance": "Document threat scenarios, controls, monitoring and response procedures.", "weight": 3, "references": ["EU-AIA-ART-15"]}
+      ]
+    },
+    {
+      "code": "PRV", "title": "Privacy and data governance", "sort_order": 3,
+      "description": "Control data provenance, suitability, access and known limitations.",
+      "questions": [
+        {"code": "PRV-01", "text": "Can the team trace the origin, preparation, permitted use and quality checks for relevant datasets?", "guidance": "Maintain dataset records covering source, transformations, quality checks and usage conditions.", "weight": 3, "references": ["EU-AIA-ART-10", "EU-AIA-ART-11"]},
+        {"code": "PRV-02", "text": "Are access, retention and protection controls defined for personal or otherwise sensitive data?", "guidance": "Link data classifications to access rules, retention decisions and security controls.", "weight": 3, "references": ["EU-AIA-ART-10"]},
+        {"code": "PRV-03", "text": "Are data gaps, errors and bias risks documented with mitigation or monitoring actions?", "guidance": "Record affected groups or contexts, detection methods, mitigations and unresolved limitations.", "weight": 3, "references": ["EU-AIA-ART-10"]}
+      ]
+    },
+    {
+      "code": "TRA", "title": "Transparency", "sort_order": 4,
+      "description": "Provide traceable records and information suited to affected stakeholders.",
+      "questions": [
+        {"code": "TRA-01", "text": "Are intended users told the system's purpose, capabilities, limitations and required interpretation of outputs?", "guidance": "Prepare concise instructions for the actual user roles and deployment context.", "weight": 3, "references": ["EU-AIA-ART-13"]},
+        {"code": "TRA-02", "text": "Can significant system outputs be traced to the relevant version, input, configuration and human decision?", "guidance": "Define identifiers and records that support reconstruction of significant decisions.", "weight": 3, "references": ["EU-AIA-ART-11", "EU-AIA-ART-12"]},
+        {"code": "TRA-03", "text": "Are logging scope, access and retention proportionate to the risks and review needs?", "guidance": "Document what is logged, why, for how long and who can review it.", "weight": 2, "references": ["EU-AIA-ART-12"]}
+      ]
+    },
+    {
+      "code": "FAI", "title": "Diversity, non-discrimination and fairness", "sort_order": 5,
+      "description": "Evaluate accessibility and uneven outcomes across relevant people and contexts.",
+      "questions": [
+        {"code": "FAI-01", "text": "Have relevant affected groups, usage contexts and barriers to access been identified with stakeholder input?", "guidance": "Document who may be affected and how their needs informed requirements or review.", "weight": 2, "references": ["EU-AIA-ART-9", "EU-AIA-ART-10"]},
+        {"code": "FAI-02", "text": "Is performance evaluated across relevant groups or contexts using defined fairness and error measures?", "guidance": "Select measures appropriate to the use case and retain disaggregated results where lawful.", "weight": 3, "references": ["EU-AIA-ART-10", "EU-AIA-ART-15"]},
+        {"code": "FAI-03", "text": "Are identified disparities assigned mitigation, acceptance or monitoring decisions with accountable owners?", "guidance": "Record the decision, rationale, owner and review date for each material disparity.", "weight": 3, "references": ["EU-AIA-ART-9", "EU-AIA-ART-10"]}
+      ]
+    },
+    {
+      "code": "SOC", "title": "Societal and environmental well-being", "sort_order": 6,
+      "description": "Consider environmental resources, societal effects and foreseeable misuse.",
+      "questions": [
+        {"code": "SOC-01", "text": "Are material compute, energy or resource impacts measured or estimated across development and operation?", "guidance": "Record the measurement boundary, method, result and reduction options.", "weight": 1, "references": ["EU-AIA-ART-9"]},
+        {"code": "SOC-02", "text": "Have broader effects on people, work practices and essential processes been reviewed before deployment?", "guidance": "Document affected processes, stakeholder input, trade-offs and safeguards.", "weight": 2, "references": ["EU-AIA-ART-9"]},
+        {"code": "SOC-03", "text": "Are foreseeable misuse and unintended-use scenarios included in risk review and user guidance?", "guidance": "Maintain scenarios, controls, detection signals and response actions.", "weight": 2, "references": ["EU-AIA-ART-9", "EU-AIA-ART-13"]}
+      ]
+    },
+    {
+      "code": "ACC", "title": "Accountability", "sort_order": 7,
+      "description": "Assign ownership and maintain reviewable evidence over the system lifecycle.",
+      "questions": [
+        {"code": "ACC-01", "text": "Are governance responsibilities, approvals and change controls defined across the AI system lifecycle?", "guidance": "Map accountable and responsible roles to lifecycle decisions and records.", "weight": 3, "references": ["EU-AIA-ART-17"]},
+        {"code": "ACC-02", "text": "Does technical documentation connect requirements, design choices, data, tests, limitations and releases?", "guidance": "Use stable identifiers so reviewers can trace claims to maintained evidence.", "weight": 3, "references": ["EU-AIA-ART-11", "EU-AIA-ART-17"]},
+        {"code": "ACC-03", "text": "Are deployed-system monitoring, incident handling and periodic reassessment triggers defined?", "guidance": "Specify indicators, thresholds, review cadence, incident routes and reassessment events.", "weight": 3, "references": ["EU-AIA-ART-9", "EU-AIA-ART-72"]}
+      ]
+    }
+  ]
+}

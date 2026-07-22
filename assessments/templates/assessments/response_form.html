@@ -1,0 +1,27 @@
+{% extends "assessments/base.html" %}
+{% block title %}{{ question.code }} | Trustworthy AI Workbench{% endblock %}
+{% block content %}
+<div class="breadcrumbs"><a href="{% url 'assessment-detail' assessment.pk %}">{{ assessment.system_name }}</a><span>/</span><span>{{ question.code }}</span></div>
+<div class="page-heading compact">
+  <p class="eyebrow">{{ question.requirement.title }}</p>
+  <h1>{{ question.text }}</h1>
+  <p class="guidance">Suggested action: {{ question.guidance }}</p>
+  <div class="tags">{% for ref in question.references.all %}<a href="{{ ref.url }}">{{ ref.code }}</a>{% empty %}<span>No direct regulatory mapping</span>{% endfor %}</div>
+</div>
+<form method="post" class="card form-card">
+  {% csrf_token %}
+  {{ form.non_field_errors }}
+  {% for field in form %}
+    <div class="field {% if field.name == 'answer' %}answer-field{% endif %}">
+      <label>{{ field.label }}</label>
+      {{ field }}
+      {% if field.help_text %}<p class="muted">{{ field.help_text }}</p>{% endif %}
+      {% for error in field.errors %}<p class="error">{{ error }}</p>{% endfor %}
+    </div>
+  {% endfor %}
+  <div class="form-actions">
+    <a class="button secondary" href="{% url 'assessment-detail' assessment.pk %}">Cancel</a>
+    <button class="button" type="submit">Save response</button>
+  </div>
+</form>
+{% endblock %}

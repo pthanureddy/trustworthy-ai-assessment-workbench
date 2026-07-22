@@ -1,0 +1,27 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Trustworthy AI Workbench{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'assessments/app.css' %}">
+</head>
+<body>
+  <header class="site-header">
+    <div class="shell header-inner">
+      <a class="brand" href="{% url 'dashboard' %}">Trustworthy AI Workbench</a>
+      <a class="button secondary" href="{% url 'assessment-create' %}">New assessment</a>
+    </div>
+  </header>
+  <main class="shell">
+    {% if messages %}
+      {% for message in messages %}<div class="message {{ message.tags }}" role="status">{{ message }}</div>{% endfor %}
+    {% endif %}
+    {% block content %}{% endblock %}
+  </main>
+  <footer class="shell footer">
+    Readiness support only - not a legal compliance determination.
+  </footer>
+</body>
+</html>

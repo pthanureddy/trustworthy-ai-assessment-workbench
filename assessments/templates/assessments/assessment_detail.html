@@ -1,0 +1,73 @@
+{% extends "assessments/base.html" %}
+{% block title %}{{ assessment.system_name }} | Trustworthy AI Workbench{% endblock %}
+{% block content %}
+<div class="page-heading with-actions">
+  <div>
+    <p class="eyebrow">{{ assessment.organisation_name }}</p>
+    <h1>{{ assessment.system_name }}</h1>
+    <p>{{ assessment.intended_purpose }}</p>
+    <div class="meta-row">
+      <span class="status {{ assessment.status }}">{{ assessment.get_status_display }}</span>
+      <span>{{ assessment.get_lifecycle_stage_display }}</span>
+      <span>{{ assessment.get_organisation_role_display }}</span>
+    </div>
+  </div>
+  <a class="button secondary" href="{% url 'assessment-report' assessment.pk %}">Export JSON report</a>
+</div>
+
+<section class="metrics" aria-label="Assessment summary">
+  <div class="metric"><span>Coverage</span><strong>{{ results.coverage_percent }}%</strong><small>{{ results.answered_count }} of {{ results.question_count }} answered</small></div>
+  <div class="metric"><span>Readiness indicator</span><strong>{% if results.readiness_percent is not None %}{{ results.readiness_percent }}%{% else %}-{% endif %}</strong><small>Excludes not-applicable answers</small></div>
+  <div class="metric"><span>Open actions</span><strong>{{ actions|length }}</strong><small>No and partly responses</small></div>
+</section>
+
+<section class="workflow card">
+  <div>
+    <h2>Review workflow</h2>
+    <p class="muted">Use review states to separate working answers from approved internal records.</p>
+  </div>
+  <div class="workflow-actions">
+    {% if assessment.status == "draft" %}
+      <form method="post" action="{% url 'assessment-transition' assessment.pk %}">{% csrf_token %}<input type="hidden" name="status" value="in_review"><button class="button" type="submit">Send to review</button></form>
+    {% elif assessment.status == "in_review" %}
+      <form method="post" action="{% url 'assessment-transition' assessment.pk %}">{% csrf_token %}<input type="hidden" name="status" value="draft"><button class="button secondary" type="submit">Return to draft</button></form>
+      <form method="post" action="{% url 'assessment-transition' assessment.pk %}">{% csrf_token %}<input type="hidden" name="status" value="completed"><button class="button" type="submit">Complete review</button></form>
+    {% else %}
+      <form method="post" action="{% url 'assessment-transition' assessment.pk %}">{% csrf_token %}<input type="hidden" name="status" value="in_review"><button class="button secondary" type="submit">Reopen review</button></form>
+    {% endif %}
+  </div>
+</section>
+
+<div class="layout">
+  <div>
+    {% for group in groups %}
+      <section class="dimension">
+        <div class="dimension-heading"><span>{{ group.code }}</span><h2>{{ group.title }}</h2></div>
+        {% for item in group.questions %}
+          <a class="question-row" href="{% url 'response-edit' assessment.pk item.question.pk %}">
+            <div>
+              <span class="question-code">{{ item.question.code }}</span>
+              <p>{{ item.question.text }}</p>
+              {% if item.question.references.all %}
+                <div class="tags">{% for ref in item.question.references.all %}<span>{{ ref.code }}</span>{% endfor %}</div>
+              {% endif %}
+            </div>
+            {% if item.response %}<span class="answer {{ item.response.answer }}">{{ item.response.get_answer_display }}</span>{% else %}<span class="answer unanswered">Unanswered</span>{% endif %}
+          </a>
+        {% endfor %}
+      </section>
+    {% endfor %}
+  </div>
+  <aside>
+    <div class="card sticky">
+      <h2>Dimension coverage</h2>
+      {% for dimension in results.dimensions %}
+        <div class="dimension-score">
+          <div><span>{{ dimension.code }}</span><strong>{{ dimension.coverage_percent }}%</strong></div>
+          <div class="progress"><span style="width: {{ dimension.coverage_percent }}%"></span></div>
+        </div>
+      {% endfor %}
+    </div>
+  </aside>
+</div>
+{% endblock %}
