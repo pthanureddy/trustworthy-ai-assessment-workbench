@@ -1,5 +1,8 @@
+from typing import ClassVar
+
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
+from django.db.models.constraints import BaseConstraint
 
 
 class Framework(models.Model):
@@ -30,8 +33,10 @@ class Requirement(models.Model):
     sort_order = models.PositiveSmallIntegerField(default=0)
 
     class Meta:
-        ordering = ["sort_order", "code"]
-        constraints = [models.UniqueConstraint(fields=["framework", "code"], name="unique_framework_requirement")]
+        ordering: ClassVar[list[str]] = ["sort_order", "code"]
+        constraints: ClassVar[list[BaseConstraint]] = [
+            models.UniqueConstraint(fields=["framework", "code"], name="unique_framework_requirement")
+        ]
 
     def __str__(self) -> str:
         return f"{self.code}: {self.title}"
@@ -50,7 +55,7 @@ class Question(models.Model):
     references = models.ManyToManyField(RegulatoryReference, blank=True, related_name="questions")
 
     class Meta:
-        ordering = ["requirement__sort_order", "code"]
+        ordering: ClassVar[list[str]] = ["requirement__sort_order", "code"]
 
     def __str__(self) -> str:
         return f"{self.code}: {self.text[:60]}"
@@ -84,7 +89,7 @@ class Assessment(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        ordering = ["-updated_at"]
+        ordering: ClassVar[list[str]] = ["-updated_at"]
 
     def __str__(self) -> str:
         return f"{self.system_name} - {self.get_status_display()}"
@@ -107,7 +112,9 @@ class Response(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        constraints = [models.UniqueConstraint(fields=["assessment", "question"], name="unique_assessment_response")]
+        constraints: ClassVar[list[BaseConstraint]] = [
+            models.UniqueConstraint(fields=["assessment", "question"], name="unique_assessment_response")
+        ]
 
     def __str__(self) -> str:
         return f"{self.assessment.system_name} / {self.question.code}: {self.answer}"
@@ -120,7 +127,7 @@ class AssessmentEvent(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        ordering = ["-created_at"]
+        ordering: ClassVar[list[str]] = ["-created_at"]
 
     def __str__(self) -> str:
         return f"{self.assessment.system_name}: {self.event_type}"

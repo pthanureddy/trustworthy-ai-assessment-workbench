@@ -1,3 +1,5 @@
+from typing import ClassVar
+
 from django import forms
 
 from .models import Assessment, Response
@@ -6,15 +8,23 @@ from .models import Assessment, Response
 class AssessmentForm(forms.ModelForm):
     class Meta:
         model = Assessment
-        fields = ["organisation_name", "system_name", "intended_purpose", "lifecycle_stage", "organisation_role"]
-        widgets = {"intended_purpose": forms.Textarea(attrs={"rows": 4})}
+        fields: ClassVar[list[str]] = [
+            "organisation_name",
+            "system_name",
+            "intended_purpose",
+            "lifecycle_stage",
+            "organisation_role",
+        ]
+        widgets: ClassVar[dict[str, forms.Widget | type[forms.Widget]]] = {
+            "intended_purpose": forms.Textarea(attrs={"rows": 4})
+        }
 
 
 class ResponseForm(forms.ModelForm):
     class Meta:
         model = Response
-        fields = ["answer", "rationale", "evidence_reference", "owner", "target_date"]
-        widgets = {
+        fields: ClassVar[list[str]] = ["answer", "rationale", "evidence_reference", "owner", "target_date"]
+        widgets: ClassVar[dict[str, forms.Widget | type[forms.Widget]]] = {
             "answer": forms.RadioSelect,
             "rationale": forms.Textarea(attrs={"rows": 4}),
             "target_date": forms.DateInput(attrs={"type": "date"}),
