@@ -5,7 +5,6 @@ from django.db import transaction
 
 from .models import Assessment, AssessmentEvent, Question, Response
 
-
 ANSWER_VALUE = {
     Response.Answer.YES: 1.0,
     Response.Answer.PARTIAL: 0.5,
